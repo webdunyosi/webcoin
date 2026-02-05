@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { FaChartLine } from "react-icons/fa6"
 import { GiBanknote } from "react-icons/gi"
 import { IoGift } from "react-icons/io5"
+import { MdShoppingCart } from "react-icons/md"
 
 const menu = [
   {
@@ -19,6 +20,12 @@ const menu = [
   },
   {
     id: 3,
+    title: "Savatcha",
+    icon: <MdShoppingCart className="w-5 h-5" />,
+    path: "/savatcha",
+  },
+  {
+    id: 4,
     title: "Xisobim",
     icon: <GiBanknote className="w-5 h-5" />,
     path: "/xisobim",

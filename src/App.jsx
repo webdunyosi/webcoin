@@ -4,11 +4,13 @@ import StudentLayout from "./layouts/StudentLayout"
 import Ranking from "./pages/student/Ranking"
 import Shopping from "./pages/student/Shopping"
 import Account from "./pages/student/Account"
+import Cart from "./pages/student/Cart"
 import Login from "./pages/Login"
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [cartItems, setCartItems] = useState([])
 
   // Load user from localStorage on mount
   useEffect(() => {
@@ -31,6 +33,19 @@ function App() {
   const handleLogout = () => {
     setLoggedInUser(null)
     localStorage.removeItem("webcoin_user")
+    setCartItems([])
+  }
+
+  const handleAddToCart = (product) => {
+    setCartItems([...cartItems, product])
+  }
+
+  const handleClearCart = (newCart) => {
+    if (Array.isArray(newCart)) {
+      setCartItems(newCart)
+    } else {
+      setCartItems([])
+    }
   }
 
   if (loading) {
@@ -73,7 +88,23 @@ function App() {
         element={
           loggedInUser ? (
             <StudentLayout user={loggedInUser} onLogout={handleLogout}>
-              <Shopping />
+              <Shopping onAddToCart={handleAddToCart} />
+            </StudentLayout>
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/savatcha"
+        element={
+          loggedInUser ? (
+            <StudentLayout user={loggedInUser} onLogout={handleLogout}>
+              <Cart
+                student={loggedInUser}
+                cartItems={cartItems}
+                onClearCart={handleClearCart}
+              />
             </StudentLayout>
           ) : (
             <Navigate to="/login" />
