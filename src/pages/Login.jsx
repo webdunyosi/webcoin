@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { MdError } from "react-icons/md"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
-import users from "../data/users.json"
+import students from "../data/students.json"
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("")
@@ -25,7 +25,7 @@ const Login = ({ onLogin }) => {
       return
     }
 
-    const user = users.find(
+    const user = students.find(
       (u) => u.username === username && u.password === password,
     )
 
