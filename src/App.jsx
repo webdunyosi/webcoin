@@ -37,6 +37,22 @@ function App() {
   }
 
   const handleAddToCart = (product) => {
+    // Check if user has enough coins
+    if (loggedInUser.coins < product.price) {
+      alert(
+        `Yetarli coins mavjud emas! Zarur: ${product.price}, Mavjud: ${loggedInUser.coins}`,
+      )
+      return
+    }
+
+    // Deduct coins from user
+    const updatedUser = {
+      ...loggedInUser,
+      coins: loggedInUser.coins - product.price,
+    }
+
+    setLoggedInUser(updatedUser)
+    localStorage.setItem("webcoin_user", JSON.stringify(updatedUser))
     setCartItems([...cartItems, product])
   }
 

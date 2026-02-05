@@ -26,7 +26,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           </p>
           <button
             onClick={() => onAddToCart(product)}
-            className="p-2 bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white rounded-lg transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
+            className="cursor-pointer p-2 bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white rounded-lg transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
           >
             <MdShoppingCart className="w-5 h-5" />
           </button>
