@@ -23,8 +23,8 @@ const Account = ({ student }) => {
         </div>
 
         {/* Profile Card */}
-        <div className="max-w-2xl">
-          <div className="bg-zinc-800/70 border border-green-500/50 rounded-xl p-8 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="bg-zinc-800/70 border border-green-500/50 rounded-xl p-8">
             <div className="flex items-center gap-6 mb-8">
               <img
                 src={student.avatar}

@@ -17,8 +17,10 @@ export const sendCartToTelegram = async (studentName, cartItems) => {
 
     let totalPrice = 0
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. ${item.title} - ${item.price} Coin\n`
-      totalPrice += item.price
+      const quantity = item.quantity || 1
+      const subtotal = item.price * quantity
+      message += `${index + 1}. ${item.title} - ${item.price} Coin x ${quantity}\n`
+      totalPrice += subtotal
     })
 
     message += `\n💰 *Jami narx:* ${totalPrice} Coin`

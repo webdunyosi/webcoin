@@ -37,23 +37,85 @@ function App() {
   }
 
   const handleAddToCart = (product) => {
-    // Check if user has enough coins
-    if (loggedInUser.coins < product.price) {
+    if (!loggedInUser || loggedInUser.coins < product.price) {
       alert(
-        `Yetarli coins mavjud emas! Zarur: ${product.price}, Mavjud: ${loggedInUser.coins}`,
+        `Yetarli coins mavjud emas! Zarur: ${product.price}, Mavjud: ${loggedInUser ? loggedInUser.coins : 0}`,
       )
       return
     }
 
-    // Deduct coins from user
-    const updatedUser = {
+    // Deduct coins
+    const newUser = {
       ...loggedInUser,
       coins: loggedInUser.coins - product.price,
     }
+    setLoggedInUser(newUser)
+    localStorage.setItem("webcoin_user", JSON.stringify(newUser))
 
-    setLoggedInUser(updatedUser)
-    localStorage.setItem("webcoin_user", JSON.stringify(updatedUser))
-    setCartItems([...cartItems, product])
+    // Add or increment quantity
+    const existing = cartItems.find((i) => i.id === product.id)
+    if (existing) {
+      setCartItems(
+        cartItems.map((i) =>
+          i.id === product.id ? { ...i, quantity: (i.quantity || 1) + 1 } : i,
+        ),
+      )
+    } else {
+      setCartItems([...cartItems, { ...product, quantity: 1 }])
+    }
+  }
+
+  const handleIncreaseQuantity = (productId) => {
+    const item = cartItems.find((i) => i.id === productId)
+    if (!item) return
+    if (!loggedInUser || loggedInUser.coins < item.price) {
+      alert(
+        `Yetarli coins yo'q! Zarur: ${item.price}, Mavjud: ${loggedInUser ? loggedInUser.coins : 0}`,
+      )
+      return
+    }
+
+    const newUser = { ...loggedInUser, coins: loggedInUser.coins - item.price }
+    setLoggedInUser(newUser)
+    localStorage.setItem("webcoin_user", JSON.stringify(newUser))
+
+    setCartItems(
+      cartItems.map((i) =>
+        i.id === productId ? { ...i, quantity: (i.quantity || 1) + 1 } : i,
+      ),
+    )
+  }
+
+  const handleDecreaseQuantity = (productId) => {
+    const item = cartItems.find((i) => i.id === productId)
+    if (!item) return
+
+    // Refund one unit
+    const newUser = { ...loggedInUser, coins: loggedInUser.coins + item.price }
+    setLoggedInUser(newUser)
+    localStorage.setItem("webcoin_user", JSON.stringify(newUser))
+
+    if ((item.quantity || 1) > 1) {
+      setCartItems(
+        cartItems.map((i) =>
+          i.id === productId ? { ...i, quantity: i.quantity - 1 } : i,
+        ),
+      )
+    } else {
+      setCartItems(cartItems.filter((i) => i.id !== productId))
+    }
+  }
+
+  const handleRemoveItem = (productId) => {
+    const item = cartItems.find((i) => i.id === productId)
+    if (!item) return
+
+    const refund = (item.quantity || 1) * item.price
+    const newUser = { ...loggedInUser, coins: loggedInUser.coins + refund }
+    setLoggedInUser(newUser)
+    localStorage.setItem("webcoin_user", JSON.stringify(newUser))
+
+    setCartItems(cartItems.filter((i) => i.id !== productId))
   }
 
   const handleClearCart = (newCart) => {
@@ -99,6 +161,7 @@ function App() {
           )
         }
       />
+
       <Route
         path="/sovgalar"
         element={
@@ -111,6 +174,7 @@ function App() {
           )
         }
       />
+
       <Route
         path="/savatcha"
         element={
@@ -120,6 +184,9 @@ function App() {
                 student={loggedInUser}
                 cartItems={cartItems}
                 onClearCart={handleClearCart}
+                onIncrease={handleIncreaseQuantity}
+                onDecrease={handleDecreaseQuantity}
+                onRemove={handleRemoveItem}
               />
             </StudentLayout>
           ) : (
@@ -127,6 +194,7 @@ function App() {
           )
         }
       />
+
       <Route
         path="/xisobim"
         element={

@@ -2,12 +2,27 @@ import { useState } from "react"
 import { MdDelete, MdShoppingCart } from "react-icons/md"
 import { sendCartToTelegram } from "../../utils/telegramService"
 
-const Cart = ({ student, cartItems, onClearCart }) => {
+const Cart = ({
+  student,
+  cartItems,
+  onClearCart,
+  onIncrease,
+  onDecrease,
+  onRemove,
+}) => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const [messageType, setMessageType] = useState("")
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0)
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0,
+  )
+
+  const totalItems = cartItems.reduce(
+    (sum, item) => sum + (item.quantity || 1),
+    0,
+  )
 
   const handleSendOrder = async () => {
     setLoading(true)
@@ -95,14 +110,30 @@ const Cart = ({ student, cartItems, onClearCart }) => {
                   </div>
 
                   <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 bg-zinc-800/30 px-2 py-1 rounded">
+                      <button
+                        onClick={() => onDecrease(item.id)}
+                        className="px-2 py-1 text-white bg-zinc-900/20 rounded hover:bg-zinc-900/30"
+                      >
+                        -
+                      </button>
+                      <span className="text-white font-semibold px-2">
+                        {item.quantity || 1}
+                      </span>
+                      <button
+                        onClick={() => onIncrease(item.id)}
+                        className="px-2 py-1 text-white bg-zinc-900/20 rounded hover:bg-zinc-900/30"
+                      >
+                        +
+                      </button>
+                    </div>
+
                     <p className="text-lime-400 font-bold text-base md:text-lg">
-                      {item.price}
+                      {item.price * (item.quantity || 1)}
                     </p>
+
                     <button
-                      onClick={() => {
-                        const newCart = cartItems.filter((_, i) => i !== index)
-                        onClearCart(newCart)
-                      }}
+                      onClick={() => onRemove(item.id)}
                       className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                     >
                       <MdDelete className="w-5 h-5" />
@@ -117,7 +148,7 @@ const Cart = ({ student, cartItems, onClearCart }) => {
               <div className="flex justify-between items-center mb-6 pb-6 border-b border-green-500/20">
                 <span className="text-gray-300">Mahsulotlar soni</span>
                 <span className="text-white font-semibold text-lg">
-                  {cartItems.length}
+                  {totalItems}
                 </span>
               </div>
 
