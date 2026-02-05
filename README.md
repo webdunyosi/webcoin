@@ -33,7 +33,7 @@ Loyihada quyidagi texnologiyalar ishlatilgan:
 - **React**
 - **Vite**
 - **JavaScript (ES6+)**
-- **CSS**
+- **Tailwindcss**
 
 ---
 
