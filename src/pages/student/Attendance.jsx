@@ -94,18 +94,27 @@ const Attendance = ({ user }) => {
       // Send attendance data to Telegram bot
       if (selectedClass && isTeacher) {
         const attendeeIds = selectedClass.attendees || []
-        const result = await sendAttendanceToTelegram(
-          selectedClass,
-          students,
-          attendeeIds
-        )
         
-        if (result.success) {
-          toast.success("Davomat muvaffaqiyatli saqlandi va Telegram botga yuborildi! ✅", {
-            position: "top-center",
-            autoClose: 2000,
-          })
-        } else {
+        try {
+          const result = await sendAttendanceToTelegram(
+            selectedClass,
+            students,
+            attendeeIds
+          )
+          
+          if (result.success) {
+            toast.success("Davomat muvaffaqiyatli saqlandi va Telegram botga yuborildi! ✅", {
+              position: "top-center",
+              autoClose: 2000,
+            })
+          } else {
+            toast.warning("Davomat saqlandi, lekin Telegram'ga yuborishda xatolik yuz berdi!", {
+              position: "top-center",
+              autoClose: 3000,
+            })
+          }
+        } catch (telegramError) {
+          console.error("Telegram send error:", telegramError)
           toast.warning("Davomat saqlandi, lekin Telegram'ga yuborishda xatolik yuz berdi!", {
             position: "top-center",
             autoClose: 3000,
@@ -118,7 +127,7 @@ const Attendance = ({ user }) => {
         })
       }
     } catch (e) {
-      console.error("Failed to save attendance to localStorage:", e)
+      console.error("Failed to save attendance:", e)
       toast.error("Davomatni saqlashda xatolik yuz berdi!", {
         position: "top-center",
         autoClose: 3000,
