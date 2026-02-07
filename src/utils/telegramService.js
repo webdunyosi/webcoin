@@ -107,9 +107,10 @@ export const sendAttendanceToTelegram = async (
 
     // Statistics
     const totalStudents = students.length
-    const attendancePercentage = Math.round(
-      (presentStudents.length / totalStudents) * 100,
-    )
+    const attendancePercentage =
+      totalStudents > 0
+        ? Math.round((presentStudents.length / totalStudents) * 100)
+        : 0
     message += `📊 *STATISTIKA:*\n`
     message += `• Jami o'quvchilar: ${totalStudents}\n`
     message += `• Kelganlar: ${presentStudents.length}\n`
