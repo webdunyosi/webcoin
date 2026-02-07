@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-screen w-64 lg:w-1/6 bg-gradient-to-b from-zinc-900 via-zinc-950 to-zinc-900 text-white flex flex-col border-r border-green-500/30 shadow-2xl shadow-green-500/10 transform transition-transform duration-300 lg:relative lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 h-screen w-64 lg:w-1/6 bg-gradient-to-b from-zinc-900 via-zinc-950 to-zinc-900 text-white flex flex-col border-r border-green-500/30 shadow-2xl shadow-green-500/10 transform transition-transform duration-300 overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
