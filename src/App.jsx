@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import StudentLayout from "./layouts/StudentLayout"
 import Ranking from "./pages/student/Ranking"
 import Shopping from "./pages/student/Shopping"
@@ -136,7 +138,20 @@ function App() {
   }
 
   return (
-    <Routes>
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <Routes>
       {/* Login Route */}
       <Route
         path="/login"
@@ -228,6 +243,7 @@ function App() {
         element={<Navigate to={loggedInUser ? "/reyting" : "/login"} />}
       />
     </Routes>
+    </>
   )
 }
 

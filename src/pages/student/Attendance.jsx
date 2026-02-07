@@ -1,10 +1,36 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import students from "../../data/students.json"
-import attendance from "../../data/attendance.json"
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa"
+import attendanceData from "../../data/attendance.json"
+import { FaCheckCircle, FaTimesCircle, FaSave } from "react-icons/fa"
+import { toast } from "react-toastify"
 
 const Attendance = () => {
-  const [selectedClass, setSelectedClass] = useState(attendance[0])
+  // localStorage'dan davomat ma'lumotlarini yuklash
+  const loadAttendance = () => {
+    const saved = localStorage.getItem("webcoin_attendance")
+    if (saved) {
+      try {
+        return JSON.parse(saved)
+      } catch (e) {
+        console.error("Failed to load attendance from localStorage:", e)
+        return attendanceData
+      }
+    }
+    return attendanceData
+  }
+
+  const [attendance, setAttendance] = useState(loadAttendance())
+  const [selectedClass, setSelectedClass] = useState(null)
+
+  // Komponenta yuklanganda birinchi darsni tanlash
+  useEffect(() => {
+    if (attendance && attendance.length > 0 && !selectedClass) {
+      const sorted = [...attendance].sort(
+        (a, b) => new Date(b.date) - new Date(a.date),
+      )
+      setSelectedClass(sorted[0])
+    }
+  }, [attendance, selectedClass])
 
   // Eng so'ngi darslarni olish
   const sortedClasses = [...attendance].sort(
@@ -35,6 +61,38 @@ const Attendance = () => {
     return { attended, total: totalClasses, percentage }
   }
 
+  // Davomat holatini o'zgartirish
+  const toggleAttendance = (studentId) => {
+    if (!selectedClass) return
+
+    const updatedAttendance = attendance.map((cls) => {
+      if (cls.id === selectedClass.id) {
+        const attendees = cls.attendees.includes(studentId)
+          ? cls.attendees.filter((id) => id !== studentId)
+          : [...cls.attendees, studentId]
+        return { ...cls, attendees }
+      }
+      return cls
+    })
+
+    setAttendance(updatedAttendance)
+
+    // Tanlangan darsni yangilash
+    const updatedSelectedClass = updatedAttendance.find(
+      (cls) => cls.id === selectedClass.id,
+    )
+    setSelectedClass(updatedSelectedClass)
+  }
+
+  // localStorage'ga saqlash
+  const saveAttendance = () => {
+    localStorage.setItem("webcoin_attendance", JSON.stringify(attendance))
+    toast.success("Davomat muvaffaqiyatli saqlandi! ✅", {
+      position: "top-center",
+      autoClose: 2000,
+    })
+  }
+
   // Ma'lumotlar mavjudligini tekshirish
   if (!attendance || attendance.length === 0) {
     return (
@@ -49,10 +107,38 @@ const Attendance = () => {
     )
   }
 
+  if (!selectedClass) {
+    return (
+      <div className="w-full relative min-h-full bg-zinc-950/80 web-pattern">
+        <div className="relative z-10 p-6">
+          <h2 className="text-2xl font-bold text-white mb-6">📋 Davomat</h2>
+          <p className="text-gray-400">Yuklanmoqda...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full relative min-h-full bg-zinc-950/80 web-pattern">
       <div className="relative z-10 p-6">
-        <h2 className="text-2xl font-bold text-white mb-6">📋 Davomat</h2>
+        {/* Header with Save Button */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-white">📋 Davomat</h2>
+          <button
+            onClick={saveAttendance}
+            className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors shadow-lg shadow-green-500/30"
+          >
+            <FaSave />
+            <span className="hidden sm:inline">Saqlash</span>
+          </button>
+        </div>
+
+        {/* Info message */}
+        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+          <p className="text-sm text-blue-300">
+            💡 O'quvchi kartasini bosing va davomat holatini o'zgartiring
+          </p>
+        </div>
 
         {/* Dars tanlash */}
         <div className="mb-6">
@@ -93,10 +179,11 @@ const Attendance = () => {
               return (
                 <div
                   key={student.id}
-                  className={`flex items-center justify-between p-4 rounded-lg transition-all ${
+                  onClick={() => toggleAttendance(student.id)}
+                  className={`flex items-center justify-between p-4 rounded-lg transition-all cursor-pointer hover:scale-[1.02] ${
                     present
-                      ? "bg-green-500/10 border border-green-500/30"
-                      : "bg-red-500/10 border border-red-500/30"
+                      ? "bg-green-500/10 border border-green-500/30 hover:bg-green-500/20"
+                      : "bg-red-500/10 border border-red-500/30 hover:bg-red-500/20"
                   }`}
                 >
                   {/* O'quvchi ma'lumotlari */}
