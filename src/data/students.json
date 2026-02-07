@@ -5,7 +5,7 @@
     "email": "saidalievsalohiddin1@gmail.com",
     "username": "salohiddin",
     "password": "*salohiddin123*",
-    "coins": 1000,
+    "coins": 0,
     "avatar": "/students/1.png"
   },
   {
@@ -14,7 +14,7 @@
     "email": "javohirweb0214@gmail.com",
     "username": "javohir",
     "password": "*javohir123*",
-    "coins": 1000,
+    "coins": 30,
     "avatar": "/students/2.png"
   },
   {
@@ -23,7 +23,7 @@
     "email": "ulugbekabdullayevich@gmail.com",
     "username": "ulugbek",
     "password": "*ulugbek123*",
-    "coins": 1000,
+    "coins": 0,
     "avatar": "/students/3.png"
   },
   {
@@ -41,7 +41,7 @@
     "email": "sayfiddinmardayev@gmail.com",
     "username": "sayfiddin",
     "password": "*sayfiddin123*",
-    "coins": 1000,
+    "coins": 10,
     "avatar": "/students/5.png"
   },
   {
@@ -50,7 +50,7 @@
     "email": "jahongirnarzullayev033@gmail.com",
     "username": "jahongir",
     "password": "*jahongir123*",
-    "coins": 1000,
+    "coins": 30,
     "avatar": "/students/6.png"
   },
   {
@@ -59,7 +59,7 @@
     "email": "hamidovabahsand@gmail.com",
     "username": "baxshand",
     "password": "*baxshand123*",
-    "coins": 1000,
+    "coins": 0,
     "avatar": "/students/7.png"
   }
 ]
