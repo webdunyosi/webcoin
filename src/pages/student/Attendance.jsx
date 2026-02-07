@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import students from "../../data/students.json"
 import attendanceData from "../../data/attendance.json"
 import { FaCheckCircle, FaTimesCircle, FaSave } from "react-icons/fa"
@@ -22,20 +22,19 @@ const Attendance = () => {
   const [attendance, setAttendance] = useState(loadAttendance())
   const [selectedClass, setSelectedClass] = useState(null)
 
+  // Eng so'ngi darslarni olish (memoized)
+  const sortedClasses = useMemo(() => {
+    return [...attendance].sort(
+      (a, b) => new Date(b.date) - new Date(a.date),
+    )
+  }, [attendance])
+
   // Komponenta yuklanganda birinchi darsni tanlash
   useEffect(() => {
     if (attendance && attendance.length > 0 && !selectedClass) {
-      const sorted = [...attendance].sort(
-        (a, b) => new Date(b.date) - new Date(a.date),
-      )
-      setSelectedClass(sorted[0])
+      setSelectedClass(sortedClasses[0])
     }
-  }, [attendance, selectedClass])
-
-  // Eng so'ngi darslarni olish
-  const sortedClasses = [...attendance].sort(
-    (a, b) => new Date(b.date) - new Date(a.date),
-  )
+  }, [attendance, selectedClass, sortedClasses])
 
   // Sanani formatlash
   const formatDate = (dateString) => {
@@ -86,11 +85,19 @@ const Attendance = () => {
 
   // localStorage'ga saqlash
   const saveAttendance = () => {
-    localStorage.setItem("webcoin_attendance", JSON.stringify(attendance))
-    toast.success("Davomat muvaffaqiyatli saqlandi! ✅", {
-      position: "top-center",
-      autoClose: 2000,
-    })
+    try {
+      localStorage.setItem("webcoin_attendance", JSON.stringify(attendance))
+      toast.success("Davomat muvaffaqiyatli saqlandi! ✅", {
+        position: "top-center",
+        autoClose: 2000,
+      })
+    } catch (e) {
+      console.error("Failed to save attendance to localStorage:", e)
+      toast.error("Davomatni saqlashda xatolik yuz berdi!", {
+        position: "top-center",
+        autoClose: 3000,
+      })
+    }
   }
 
   // Ma'lumotlar mavjudligini tekshirish
@@ -134,7 +141,11 @@ const Attendance = () => {
         </div>
 
         {/* Info message */}
-        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+        <div
+          className="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg"
+          role="status"
+          aria-label="Ma'lumot: O'quvchi kartasini bosib davomat holatini o'zgartiring"
+        >
           <p className="text-sm text-blue-300">
             💡 O'quvchi kartasini bosing va davomat holatini o'zgartiring
           </p>
