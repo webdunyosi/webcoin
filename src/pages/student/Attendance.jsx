@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from "react"
 import students from "../../data/students.json"
 import attendanceData from "../../data/attendance.json"
-import { FaCheckCircle, FaTimesCircle, FaSave } from "react-icons/fa"
+import { FaCheckCircle, FaTimesCircle, FaSave, FaCalendarAlt } from "react-icons/fa"
 import { toast } from "react-toastify"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 const Attendance = () => {
   // localStorage'dan davomat ma'lumotlarini yuklash
@@ -151,28 +153,46 @@ const Attendance = () => {
           </p>
         </div>
 
-        {/* Dars tanlash */}
+        {/* Dars tanlash - Modern Calendar */}
         <div className="mb-6">
-          <label className="block text-gray-300 mb-2 text-sm">
+          <label className="block text-gray-300 mb-3 text-sm flex items-center gap-2">
+            <FaCalendarAlt className="text-green-400" />
             Darsni tanlang:
           </label>
-          <select
-            value={selectedClass.id}
-            onChange={(e) =>
-              setSelectedClass(
-                sortedClasses.find(
-                  (cls) => cls.id === parseInt(e.target.value),
-                ),
-              )
-            }
-            className="w-full md:w-auto px-4 py-2 bg-zinc-900 text-white rounded-lg border border-green-500/30 focus:outline-none focus:border-green-500"
-          >
-            {sortedClasses.map((cls) => (
-              <option key={cls.id} value={cls.id}>
-                {cls.day}, {formatDate(cls.date)} - {cls.time}
-              </option>
-            ))}
-          </select>
+          <div className="bg-zinc-900/70 rounded-xl p-4 border border-green-500/30">
+            <DatePicker
+              selected={selectedClass ? new Date(selectedClass.date) : null}
+              onChange={(date) => {
+                if (date) {
+                  const dateString = date.toISOString().split("T")[0]
+                  const classOnDate = sortedClasses.find(
+                    (cls) => cls.date === dateString,
+                  )
+                  if (classOnDate) {
+                    setSelectedClass(classOnDate)
+                  } else {
+                    toast.info("Bu sanada dars yo'q", {
+                      position: "top-center",
+                      autoClose: 2000,
+                    })
+                  }
+                }
+              }}
+              includeDates={sortedClasses.map((cls) => new Date(cls.date))}
+              dateFormat="dd.MM.yyyy"
+              inline
+              calendarClassName="custom-calendar"
+              className="w-full"
+            />
+            {selectedClass && (
+              <div className="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/30">
+                <p className="text-green-400 font-medium">
+                  📅 {selectedClass.day}, {formatDate(selectedClass.date)} -{" "}
+                  {selectedClass.time}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Davomat jadvali */}
