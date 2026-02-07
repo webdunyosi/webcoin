@@ -3,6 +3,7 @@ import students from "../../data/students.json"
 import attendanceData from "../../data/attendance.json"
 import { FaCheckCircle, FaTimesCircle, FaSave } from "react-icons/fa"
 import { toast } from "react-toastify"
+import { sendAttendanceToTelegram } from "../../utils/telegramService"
 
 const Attendance = ({ user }) => {
   // Check if user is a teacher
@@ -86,13 +87,36 @@ const Attendance = ({ user }) => {
   }
 
   // localStorage'ga saqlash
-  const saveAttendance = () => {
+  const saveAttendance = async () => {
     try {
       localStorage.setItem("webcoin_attendance", JSON.stringify(attendance))
-      toast.success("Davomat muvaffaqiyatli saqlandi! ✅", {
-        position: "top-center",
-        autoClose: 2000,
-      })
+      
+      // Send attendance data to Telegram bot
+      if (selectedClass && isTeacher) {
+        const attendeeIds = selectedClass.attendees || []
+        const result = await sendAttendanceToTelegram(
+          selectedClass,
+          students,
+          attendeeIds
+        )
+        
+        if (result.success) {
+          toast.success("Davomat muvaffaqiyatli saqlandi va Telegram botga yuborildi! ✅", {
+            position: "top-center",
+            autoClose: 2000,
+          })
+        } else {
+          toast.warning("Davomat saqlandi, lekin Telegram'ga yuborishda xatolik yuz berdi!", {
+            position: "top-center",
+            autoClose: 3000,
+          })
+        }
+      } else {
+        toast.success("Davomat muvaffaqiyatli saqlandi! ✅", {
+          position: "top-center",
+          autoClose: 2000,
+        })
+      }
     } catch (e) {
       console.error("Failed to save attendance to localStorage:", e)
       toast.error("Davomatni saqlashda xatolik yuz berdi!", {
