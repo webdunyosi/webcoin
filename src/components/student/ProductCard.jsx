@@ -2,7 +2,7 @@ import { MdShoppingCart } from "react-icons/md"
 
 const ProductCard = ({ product, onAddToCart }) => {
   return (
-    <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur border border-green-500/20 hover:border-green-500/50 p-4 md:p-5 rounded-xl shadow-lg hover:shadow-green-500/20 transition-all duration-300 hover:scale-105 group">
+    <div className="bg-linear-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur border border-green-500/20 hover:border-green-500/50 p-4 md:p-5 rounded-xl shadow-lg hover:shadow-green-500/20 transition-all duration-300 hover:scale-105 group">
       {/* Image */}
       <div className="relative mb-4 overflow-hidden rounded-lg bg-zinc-900/50 p-3">
         <img
@@ -26,7 +26,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           </p>
           <button
             onClick={() => onAddToCart(product)}
-            className="cursor-pointer p-2 bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white rounded-lg transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
+            className="cursor-pointer p-2 bg-linear-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white rounded-lg transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
           >
             <MdShoppingCart className="w-5 h-5" />
           </button>

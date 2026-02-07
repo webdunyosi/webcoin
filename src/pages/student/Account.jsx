@@ -43,7 +43,7 @@ const Account = ({ student }) => {
             </div>
 
             {/* Balance Section */}
-            <div className="bg-gradient-to-r from-green-600/20 to-lime-600/20 border border-green-500/50 rounded-lg p-6 mb-6">
+            <div className="bg-linear-to-r from-green-600/20 to-lime-600/20 border border-green-500/50 rounded-lg p-6 mb-6">
               <p className="text-gray-400 text-sm mb-2">Umumiy Balans</p>
               <div className="flex items-center gap-3">
                 <span className="text-5xl font-bold text-lime-400">

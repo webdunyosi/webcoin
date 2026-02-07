@@ -6,7 +6,7 @@ const Shopping = ({ onAddToCart }) => {
   return (
     <div className="w-full relative min-h-full bg-zinc-950">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-blue-900/10"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-green-900/10 via-transparent to-blue-900/10"></div>
 
       {/* Content */}
       <div className="relative z-10 p-4 md:p-6 lg:p-8">

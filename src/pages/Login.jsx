@@ -40,7 +40,7 @@ const Login = ({ onLogin }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-950 to-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-zinc-900 via-zinc-950 to-black flex items-center justify-center p-4">
       {/* Background Gradient Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-green-500/10 rounded-full blur-3xl"></div>
@@ -49,17 +49,17 @@ const Login = ({ onLogin }) => {
 
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md">
-        <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-xl border border-green-500/20 rounded-2xl shadow-2xl shadow-green-500/10 p-8 md:p-10">
+        <div className="bg-linear-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-xl border border-green-500/20 rounded-2xl shadow-2xl shadow-green-500/10 p-8 md:p-10">
           {/* Logo Section */}
           <div className="flex justify-center mb-8">
-            <div className="p-4 bg-gradient-to-br from-green-400 to-lime-500 rounded-xl shadow-lg shadow-green-500/50">
-              <img className="w-10" src="/logo.png" alt="WebCoin logo" />
+            <div className="p-2 bg-linear-to-br from-green-400 to-lime-500 rounded-xl shadow-lg shadow-green-500/50">
+              <img className="w-16" src="/logo.png" alt="WebCoin logo" />
             </div>
           </div>
 
           {/* Title */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold bg-linear-to-r from-green-400 to-lime-300 bg-clip-text text-transparent mb-2">
               WebCoin
             </h1>
             <p className="text-gray-400 text-sm">O'quvchi akkauntiga kirish</p>
@@ -100,7 +100,7 @@ const Login = ({ onLogin }) => {
             {/* Error Message */}
             {error && (
               <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-                <MdError className="w-5 h-5 text-red-400 flex-shrink-0" />
+                <MdError className="w-5 h-5 text-red-400 shrink-0" />
                 <p className="text-sm text-red-300">{error}</p>
               </div>
             )}
@@ -109,7 +109,7 @@ const Login = ({ onLogin }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 disabled:from-gray-600 disabled:to-gray-600 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
+              className="w-full py-3 px-4 bg-linear-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 disabled:from-gray-600 disabled:to-gray-600 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
             >
               {loading ? (
                 <>

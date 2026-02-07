@@ -48,7 +48,7 @@ const Cart = ({
   return (
     <div className="w-full relative min-h-full bg-zinc-950">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-blue-900/10"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-green-900/10 via-transparent to-blue-900/10"></div>
 
       {/* Content */}
       <div className="relative z-10 p-4 md:p-6 lg:p-8">
@@ -144,7 +144,7 @@ const Cart = ({
             </div>
 
             {/* Summary Card */}
-            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-green-500/30 rounded-lg md:rounded-xl p-6">
+            <div className="bg-linear-to-br from-zinc-800/50 to-zinc-900/50 border border-green-500/30 rounded-lg md:rounded-xl p-6">
               <div className="flex justify-between items-center mb-6 pb-6 border-b border-green-500/20">
                 <span className="text-gray-300">Mahsulotlar soni</span>
                 <span className="text-white font-semibold text-lg">
@@ -162,7 +162,7 @@ const Cart = ({
               <button
                 onClick={handleSendOrder}
                 disabled={loading || cartItems.length === 0}
-                className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 disabled:from-gray-600 disabled:to-gray-600 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/30"
+                className="w-full py-3 px-4 bg-linear-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 disabled:from-gray-600 disabled:to-gray-600 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/30"
               >
                 {loading ? (
                   <>

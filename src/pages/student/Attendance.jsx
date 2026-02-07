@@ -238,7 +238,7 @@ const Attendance = () => {
         </div>
 
         {/* Dars jadvali ma'lumoti */}
-        <div className="bg-gradient-to-r from-green-500/10 to-lime-500/10 rounded-xl p-6 border border-green-500/20">
+        <div className="bg-linear-to-r from-green-500/10 to-lime-500/10 rounded-xl p-6 border border-green-500/20">
           <h3 className="text-lg font-semibold text-green-400 mb-3">
             📅 Dars jadvali
           </h3>
