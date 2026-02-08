@@ -16,7 +16,7 @@ const Shopping = ({ student, onAddToCart }) => {
     "Iyun",
     "Iyul",
     "Avgust",
-    "Sentabr",
+    "Sentyabr",
     "Oktabr",
     "Noyabr",
     "Dekabr",
@@ -41,28 +41,26 @@ const Shopping = ({ student, onAddToCart }) => {
     // In a real app, you'd calculate all unpaid months
     const unpaidInfo = []
     
-    if (student.debt > 0) {
-      // Check if current month is paid
-      const currentMonthKey = `${currentYear}-${currentMonth}`
-      if (!paidMonths.includes(currentMonthKey)) {
-        unpaidInfo.push({
-          month: monthNames[currentMonth - 1],
-          year: currentYear
-        })
-      }
+    // Check if current month is paid
+    const currentMonthKey = `${currentYear}-${currentMonth}`
+    if (!paidMonths.includes(currentMonthKey)) {
+      unpaidInfo.push({
+        month: monthNames[currentMonth - 1],
+        year: currentYear
+      })
+    }
+    
+    // Check previous month if debt is significant and not already added
+    if (student.debt >= student.courseFee) {
+      const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1
+      const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear
+      const prevMonthKey = `${prevYear}-${prevMonth}`
       
-      // Check previous month if debt is significant
-      if (student.debt >= student.courseFee) {
-        const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1
-        const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear
-        const prevMonthKey = `${prevYear}-${prevMonth}`
-        
-        if (!paidMonths.includes(prevMonthKey)) {
-          unpaidInfo.push({
-            month: monthNames[prevMonth - 1],
-            year: prevYear
-          })
-        }
+      if (!paidMonths.includes(prevMonthKey) && prevMonthKey !== currentMonthKey) {
+        unpaidInfo.push({
+          month: monthNames[prevMonth - 1],
+          year: prevYear
+        })
       }
     }
     
