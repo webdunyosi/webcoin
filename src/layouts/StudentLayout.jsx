@@ -23,7 +23,7 @@ const StudentLayout = ({ user, onLogout, children }) => {
           onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         />
 
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto relative">{children}</main>
       </div>
     </div>
   )
