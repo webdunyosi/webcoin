@@ -108,9 +108,10 @@ const Attendance = ({ user }) => {
           autoClose: 3000,
         })
       } else {
-        toast.warning("Davomat saqlandi, lekin Telegram'ga yuborishda xatolik yuz berdi", {
+        console.error("Telegram send failed:", telegramResult.error)
+        toast.warning(`Davomat saqlandi, lekin Telegram'ga yuborishda xatolik: ${telegramResult.error || "Noma'lum xatolik"}`, {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 4000,
         })
       }
     } catch (e) {
