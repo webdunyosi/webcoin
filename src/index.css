@@ -70,3 +70,10 @@
     box-shadow: 0 0 16px rgba(190, 242, 100, 0.9);
   }
 }
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse {
+    animation: none;
+  }
+}

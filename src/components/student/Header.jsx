@@ -10,7 +10,7 @@ const Header = ({ student, onLogout, onMenuClick }) => {
   }
 
   return (
-    <header className="sticky top-0 z-100 bg-gradient-to-r from-zinc-900/80 via-zinc-950/90 to-zinc-900/80 backdrop-blur-2xl text-white p-3 md:p-5 flex justify-between items-center border-b border-green-500/30 shadow-2xl shadow-green-500/10">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-zinc-900/80 via-zinc-950/90 to-zinc-900/80 backdrop-blur-2xl text-white p-3 md:p-5 flex justify-between items-center border-b border-green-500/30 shadow-2xl shadow-green-500/10">
       {/* Animated background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-lime-500/5 animate-pulse opacity-30"></div>
       
