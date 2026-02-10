@@ -71,7 +71,7 @@ const Shopping = ({ student, onAddToCart }) => {
 
   return (
     <>
-      <div className="w-full relative min-h-full bg-zinc-950">
+      <div className="w-full relative min-h-full bg-zinc-950/80 web-pattern">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-linear-to-br from-green-900/10 via-transparent to-blue-900/10"></div>
 
